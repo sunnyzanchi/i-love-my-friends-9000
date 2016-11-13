@@ -1,0 +1,13 @@
+.search-box{
+  border: 0;
+  border-radius: 6px;
+  
+  padding: 2px 2px 2px 6px;
+  line-height: 30px;
+  max-width: 400px;
+  
+  flex-grow: 1;
+}
+.search-box:focus{
+  outline: none;
+}

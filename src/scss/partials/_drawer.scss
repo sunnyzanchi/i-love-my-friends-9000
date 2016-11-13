@@ -1,0 +1,40 @@
+drawer{
+  display: block;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 80%;
+  max-width: 300px;
+  
+  background: #fff;
+  
+  z-index: 600;
+  @include shadow-16dp();
+  
+  .menu{
+    padding: 15px;
+    i{
+      color: #888;
+      vertical-align: middle;
+    }
+    .separator{
+      border-bottom: 1px solid #eee;
+      margin-bottom: 5px;
+    }
+    li{
+      line-height: 35px;
+    }
+    span{
+      vertical-align: middle;
+    }
+  }
+}
+.drawer-topper{
+  height: 175px;
+  background: $secondary-color;
+  h1,h2,h3,h4,h5,h6{
+    color: #fff;
+    padding: 10px;
+  }
+}

@@ -1,0 +1,50 @@
+.searchbar-slidein-enter{
+  opacity: 0;
+  transform: scaleX(.25);
+}
+.searchbar-slidein-enter-active{
+  transition: opacity .1s, transform .3s;
+  transform-origin: right;
+}
+.title-bar{
+  align-items: center;
+  background: $primary-color;
+  display: flex;
+  justify-content: space-between;
+  left: 0;
+  padding: 10px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 100;
+  @media(min-width:500px){
+      padding: 25px;
+  }
+
+  h1{
+    color: #fff;
+    flex-grow: 2;
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0;
+    padding-left: 20px;
+    transition: color .3s;
+  }
+  i{
+    color: #fff;
+    padding: 10px;
+  }
+  .menu{
+    transition: color .3s;
+  }
+  .menu-grow{
+    flex-grow: 2;
+  }
+  &.search-box-active{
+    justify-content: flex-end;
+
+    .menu{
+      color: transparent;
+    }
+  }
+}
