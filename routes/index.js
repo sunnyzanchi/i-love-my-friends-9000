@@ -3,14 +3,8 @@ const router = express.Router();
 const mongo = require("mongodb");
 const fs = require("fs");
 const monk = require("monk");
-var db;
-
-fs.readFile("db.json", "utf8", function(err,data){
-  var dbinfo = JSON.parse(data);
-  var creds = dbinfo.creds;
-  var hostname = dbinfo.hostname;
-  db = monk(`mongodb://${creds.user}:${creds.password}@${hostname}`);
-});
+const dbjson = require('../db.json');
+const db = monk(`mongodb://${dbjson.creds.user}:${dbjson.creds.password}@${dbjson.hostname}`);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

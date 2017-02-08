@@ -1,43 +1,47 @@
+const config = require('./webpack.config.js');
 const gulp = require('gulp');
-const sass = require('gulp-sass');
-const rename = require('gulp-rename');
 const nodemon = require('gulp-nodemon');
+const path = require('path');
 const pump = require('pump');
+const rename = require('gulp-rename');
+const sass = require('gulp-sass');
 const webpack = require('gulp-webpack');
-const webpackConfig = require('./webpack.config.js');
 
-const xjsvue = /.*src.*(?:\.js|\.vue)/;
-const xscss = /.*\.scss/;
-
-gulp.task('build-scss', function(cb){
-  pump([
-    gulp.src('src/scss/main.scss'),
-    sass({includePaths: ['scss', 'scss/partials']}),
-    rename('style.css'),
-    gulp.dest('public/css')
-  ],cb)
-});
 
 gulp.task('webpack', function(cb){
   pump([
     gulp.src('src/js/main.js'),
-    webpack(webpackConfig),
-    gulp.dest('public/js')
+    webpack(config),
+    gulp.dest('public')
   ],cb);
-})
+});
 
-gulp.task('default', ['build-scss', 'webpack'], function(cb){
+gulp.task('scss', function(cb){
+  pump([
+    gulp.src('src/scss/main.scss'),
+    sass(),
+    rename('style.css'),
+    gulp.dest('./public/css')
+  ],cb);
+});
+
+gulp.task('default', ['webpack', 'scss'], function(cb){
   return nodemon({
+    delay: 10,
     ignore: ['public/**/*.*'],
-    scripts: {start: 'node bin/www'},
-    tasks(changeFiles){
-      var tasks = [];
-      changeFiles.forEach(file=>{
-        if(xjsvue.test(file)) tasks.push('webpack');
-        if(xscss.test(file)) tasks.push('build-scss');
-      });
+    scripts: {
+      start: 'node app.js'
+    },
+    tasks(changedFiles){
+      const tasks = [];
+      for(let file of changedFiles){
+        if(path.extname(file) === '.js' || path.extname(file) === '.vue')
+          tasks.push('webpack');
+        if(path.extname(file) === '.scss')
+          tasks.push('scss');
+      }
       return tasks;
     },
-    watch: ['**/*.*']
-  })
+    watch: '**/*.*'
+  });
 });
